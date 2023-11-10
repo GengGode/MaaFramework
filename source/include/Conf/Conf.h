@@ -156,3 +156,9 @@
     namespace MAA_TOOLKIT_SERVER_NS \
     {
 #define MAA_TOOLKIT_SERVER_NS_END }
+
+#define MAA_RESTFUL_NS MAA_NS::RestfulNS
+#define MAA_RESTFUL_NS_BEGIN \
+    namespace MAA_RESTFUL_NS \
+    {
+#define MAA_RESTFUL_NS_END }
