@@ -24,6 +24,12 @@ struct Context
         json_body({ { "error", why } });
     }
 
+    void not_found(const std::string& why)
+    {
+        res_.result(http::status::not_found);
+        json_body({ { "error", why } });
+    }
+
     void init()
     {
         res_.set(http::field::server, BOOST_BEAST_VERSION_STRING);

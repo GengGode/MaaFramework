@@ -6,6 +6,8 @@ MAA_RESTFUL_NS_BEGIN
 
 bool DeviceDispatcher::handle(Context& ctx, std::vector<std::string_view> url_segs)
 {
+    std::unique_lock<std::mutex> lock(find_mtx_);
+
     auto seg0 = url_segs[0];
 
     if (seg0 == "devices") {
@@ -26,7 +28,8 @@ bool DeviceDispatcher::handle(Context& ctx, std::vector<std::string_view> url_se
             if (seg1 == "find") {
                 switch (ctx.req_.method()) {
                 case http::verb::put:
-                    ctx.json_body({ { "count", MaaToolKitFindDevice() } });
+                    find_count_ = MaaToolKitFindDevice();
+                    ctx.json_body({ { "count", find_count_ } });
                     break;
                 default:
                     ctx.bad_request(MAA_FMT::format("bad verb {}", std::string_view(ctx.req_.method_string())));
@@ -37,13 +40,17 @@ bool DeviceDispatcher::handle(Context& ctx, std::vector<std::string_view> url_se
     }
     else if (seg0 == "device") {
         if (url_segs.size() == 1) {
-            ctx.bad_request(MAA_FMT::format("id expected"));
+            ctx.bad_request("id expected");
             return true;
         }
         else {
             auto seg1 = url_segs[1];
 
-            int id = std::stoul(std::string(seg1));
+            auto id = std::stoul(std::string(seg1));
+            if (id >= find_count_) {
+                ctx.not_found("id not found");
+                return true;
+            }
 
             if (url_segs.size() == 2) {
                 switch (ctx.req_.method()) {
