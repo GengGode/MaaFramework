@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Helper/Forward.hpp"
+#include "Utils/Format.hpp"
 
 #include <meojson/json.hpp>
 
@@ -34,6 +35,30 @@ struct Context
     {
         res_.set(http::field::server, BOOST_BEAST_VERSION_STRING);
         res_.keep_alive(req_.keep_alive());
+    }
+
+    void match_verb() { bad_request(MAA_FMT::format("bad verb {}", std::string_view(req_.method_string()))); }
+
+    template <typename Func>
+    void match_verb(http::verb v, Func func)
+    {
+        if (req_.method() == v) {
+            func(*this);
+        }
+        else {
+            match_verb();
+        }
+    }
+
+    template <typename Func, typename... Args>
+    void match_verb(http::verb v, Func func, Args&&... args)
+    {
+        if (req_.method() == v) {
+            func(*this);
+        }
+        else {
+            match_verb(std::forward(args...));
+        }
     }
 
     http::request<http::string_body> req_;

@@ -4,9 +4,9 @@
 
 MAA_RESTFUL_NS_BEGIN
 
-struct RootDispatcher : public Dispatcher<void>
+struct RootDispatcher
 {
-    virtual bool handle(Context& ctx, std::vector<std::string_view> url_segs) override;
+    bool handle(Context& ctx, UrlSegments segs);
 
     DeviceDispatcher device_;
 };

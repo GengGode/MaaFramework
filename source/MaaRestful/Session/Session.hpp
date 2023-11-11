@@ -56,7 +56,7 @@ public:
 
     void on_write(bool keep_alive, beast::error_code ec, std::size_t bytes_transferred)
     {
-        boost::ignore_unused(bytes_transferred);
+        std::ignore = bytes_transferred;
 
         if (ec) {
             return fail(ec, "write");

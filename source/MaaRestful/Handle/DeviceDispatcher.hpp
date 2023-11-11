@@ -1,17 +1,18 @@
 #pragma once
 
-#include "Handle/Dispatcher.hpp"
+#include "Handle/Context.hpp"
+#include "Helper/UrlSegments.hpp"
 
 #include <mutex>
 
 MAA_RESTFUL_NS_BEGIN
 
-struct DeviceDispatcher : public Dispatcher<void>
+struct DeviceDispatcher
 {
-    virtual bool handle(Context& ctx, std::vector<std::string_view> url_segs) override;
+    bool handle(Context& ctx, UrlSegments segs);
 
-    std::mutex find_mtx_;
-    size_t find_count_;
+    static std::mutex find_mtx_;
+    static size_t find_count_;
 };
 
 MAA_RESTFUL_NS_END

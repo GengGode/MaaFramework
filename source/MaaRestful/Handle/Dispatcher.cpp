@@ -1,5 +1,6 @@
 #include "Handle/Dispatcher.hpp"
 #include "Handle/RootDispatcher.hpp"
+#include "Helper/UrlSegments.hpp"
 #include "MaaFramework/MaaAPI.h"
 #include "Utils/Format.hpp"
 #include <iostream>
