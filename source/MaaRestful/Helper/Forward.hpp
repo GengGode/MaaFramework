@@ -1,5 +1,8 @@
 #pragma once
 
+#define BOOST_WANT_UUID
+#define BOOST_WANT_BEAST
+
 #include "Conf/Conf.h"
 #include "Utils/Boost.hpp"
 

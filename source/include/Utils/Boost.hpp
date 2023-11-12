@@ -16,18 +16,22 @@ MAA_SUPPRESS_BOOST_WARNINGS_BEGIN
 #include <boost/config.hpp>
 #include <boost/dll.hpp>
 #include <boost/process.hpp>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
 
 #ifdef _WIN32
 #include <boost/process/windows.hpp>
 #endif
 
-#ifdef WITH_RESTFUL
+#ifdef BOOST_WANT_UUID
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#endif
+
+#ifdef BOOST_WANT_BEAST
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
 #include <boost/url.hpp>
 #endif
+
 MAA_SUPPRESS_BOOST_WARNINGS_END

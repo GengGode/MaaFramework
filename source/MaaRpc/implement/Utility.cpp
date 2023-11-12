@@ -1,10 +1,10 @@
+#define BOOST_WANT_UUID
+
 #include "Utility.h"
 #include "MaaFramework/MaaAPI.h"
 #include "Macro.h"
+#include "Utils/Boost.hpp"
 #include "Utils/Logger.h"
-
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
 
 using namespace ::grpc;
 
